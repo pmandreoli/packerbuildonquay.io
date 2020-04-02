@@ -1,0 +1,34 @@
+{
+    "builders": [
+        {
+            "type": "docker",
+            "image": "<base image>",
+            "commit": "true",
+            "pull": "false",
+	    "changes": ["ENTRYPOINT /usr/bin/startup"]
+	}
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "script": "test.sh"
+        }
+    ],
+    "post-processors": [
+[	
+    {
+      "type":"docker-tag",    
+      "repository": "quay.io/<quay.io repo>",
+      "tag": "<image-tag>"
+    },
+{
+   "type":"docker-push",
+   "login_server":"quay.io",
+   "login":"true",
+   "login_username":"<username>",
+   "login_password":"<password>" 
+}
+  ]
+]
+ 
+}
